@@ -12,7 +12,7 @@
 $m = new Mongo();
 
 // select a database
-$db = $m->ramblings;
+$db = $m->Ramblings;
 
 // select a collection (analogous to a relational database's table)
 $collection = $db->blog;
