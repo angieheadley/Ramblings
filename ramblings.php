@@ -34,7 +34,8 @@ $cursor = $collection->find();
 // iterate through the results
 foreach ($cursor as $obj) {
     echo "<h2 style=\"font-family: sans-serif\">".$obj["slogan"] ."</h2>\n";
-    echo "<p>".$obj["comment"] ." -- <i>".$obj["author"]."</i></p>\n";
+    echo "<p>".$obj["comment"] ."</p>\n";
+	echo "<p>"."-- <i>".$obj["author"]."</i></p>\n";
 }
 
 ?>
