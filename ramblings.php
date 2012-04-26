@@ -1,5 +1,3 @@
-// Modified by Rebecca Wright and Angie Headley
-
 <!DOCTYPE html>
 <html>
 <head>
