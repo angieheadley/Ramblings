@@ -9,7 +9,7 @@
 <?php
 
 // connect
-$m = new Mongo(); //mongodb://75.192.156.182:Angie's port
+$m = new Mongo("mongodb://10.35.88.93"); //:Angie's port
 
 // select a database
 $db = $m->Ramblings;
@@ -30,6 +30,7 @@ if (isset($_POST['rant'])) {
 
 	
 	}  
+
 		if (isset($_POST['continue'])){
 			$rant2=$_POST['continue'];
 			$commentator2 = $_POST['commentator'];
@@ -52,7 +53,7 @@ foreach ($cursor as $obj) {
     $cursor2 = $collection2->find();
     foreach ($cursor2 as $obj2) {
 	$title2=$obj2["rant"];
-	if($title==$title2){
+	if(strcasecmp($title,$title2)==0){
     echo "<p>".$obj2["comment"] ." -- <i>".$obj2["author"]."</i></p>\n";
 	}
 }
