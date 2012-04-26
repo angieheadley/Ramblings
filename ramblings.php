@@ -17,32 +17,46 @@ $db = $m->Ramblings;
 // select a collection (analogous to a relational database's table)
 $collection = $db->blog;
 
-
-if (isset($_POST['slogan'])) {
-	$slogan = $_POST['slogan'];
+// put in link to post a rambling
+echo "<a href='add.htm'>Add a Ramble</a>";
+if (isset($_POST['rant'])) {
+	$rant = $_POST['rant'];
+    //echo "<p>".$_POST['slogan']."</p>";
 	$commentator = $_POST['commentator'];
 	$comment = $_POST['comments'];
-    //echo "<p>".$_POST['slogan']."</p>";
-    $obj = array( "slogan" => $slogan, "author" => $commentator, "comment" => $comment );
+    $obj = array( "rant" => $rant, "author" => $commentator, "comment" => $comment );
 	$collection->insert($obj);
 
-    }
-
+	
+	}  
+		if (isset($_POST['continue'])){
+			$rant2=$_POST['continue'];
+			$commentator2 = $_POST['commentator'];
+			echo "<p>".$_POST['commentator']."</p>" ;
+			$comment2 = $_POST['comments'];
+			$obj2= array( "rant" => $rant2, "author" => $commentator2, "comment" => $comment2 );
+			$collection->insert($obj2);
+			}
 // find everything in the collection
 $cursor = $collection->find();
 
+
+//$cursor searching threads
 // iterate through the results
 foreach ($cursor as $obj) {
-    echo "<h2 style=\"font-family: sans-serif\">".$obj["slogan"] ."</h2>\n";
-    echo "<p>".$obj["comment"] ."</p>\n";
-	echo "<p>"."-- <i>".$obj["author"]."</i></p>\n";
-	echo"<a href='comment.htm'>Continue the Rant</a>";
+    $title = $obj["rant"];
+	echo "<h2 style=\"font-family: sans-serif\">".$obj["rant"] ."</h2>\n";
+    $cursor2 = $collection->find(array("rant" => $title));
+    foreach ($cursor2 as $obj2) {
+    echo "<p>".$obj["comment"] ." -- <i>".$obj["author"]."</i></p>\n";
+	echo "<a href='comment.htm'>Continue the Rant</a>";
+}
 }
 
 ?>
 
 
-<a href="add.htm">Add a Ramble</a>
+
 </div>
 </body>
 </html>
