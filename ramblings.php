@@ -9,13 +9,14 @@
 <?php
 
 // connect
-$m = new Mongo();
+$m = new Mongo(); //mongodb://75.192.156.182:Angie's port
 
 // select a database
 $db = $m->Ramblings;
 
 // select a collection (analogous to a relational database's table)
 $collection = $db->blog;
+$collection2= $db->comments;
 
 // put in link to post a rambling
 echo "<a href='add.htm'>Add a Ramble</a>";
@@ -32,10 +33,10 @@ if (isset($_POST['rant'])) {
 		if (isset($_POST['continue'])){
 			$rant2=$_POST['continue'];
 			$commentator2 = $_POST['commentator'];
-			echo "<p>".$_POST['commentator']."</p>" ;
+			//echo "<p>".$_POST['commentator']."</p>" ;
 			$comment2 = $_POST['comments'];
 			$obj2= array( "rant" => $rant2, "author" => $commentator2, "comment" => $comment2 );
-			$collection->insert($obj2);
+			$collection2->insert($obj2);
 			}
 // find everything in the collection
 $cursor = $collection->find();
@@ -46,10 +47,14 @@ $cursor = $collection->find();
 foreach ($cursor as $obj) {
     $title = $obj["rant"];
 	echo "<h2 style=\"font-family: sans-serif\">".$obj["rant"] ."</h2>\n";
-    $cursor2 = $collection->find(array("rant" => $title));
-    foreach ($cursor2 as $obj2) {
-    echo "<p>".$obj["comment"] ." -- <i>".$obj["author"]."</i></p>\n";
+	echo "<p>".$obj["comment"] ." -- <i>".$obj["author"]."</i></p>\n";
 	echo "<a href='comment.htm'>Continue the Rant</a>";
+    $cursor2 = $collection2->find();
+    foreach ($cursor2 as $obj2) {
+	$title2=$obj2["rant"];
+	if($title==$title2){
+    echo "<p>".$obj2["comment"] ." -- <i>".$obj2["author"]."</i></p>\n";
+	}
 }
 }
 
